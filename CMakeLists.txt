@@ -10,7 +10,6 @@ qt_add_executable(Quickpad
     main.cpp
     mainwindow.cpp
     mainwindow.h
-    mainwindow.ui
 )
 
 target_link_libraries(Quickpad

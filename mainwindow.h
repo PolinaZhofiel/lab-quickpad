@@ -2,12 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
-QT_BEGIN_NAMESPACE
-namespace Ui {
-class MainWindow;
-}
-QT_END_NAMESPACE
+#include <QPlainTextEdit>
+#include <QString>
+#include <QAction>
 
 class MainWindow : public QMainWindow
 {
@@ -15,9 +12,35 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
+
+private slots:
+    void newDocument();
+    void openDocument();
+    bool saveDocument();
+    bool saveDocumentAs();
+    void showAboutDialog();
+    void markDocumentChanged();
+    void updateEditActions();
 
 private:
-    Ui::MainWindow *ui;
+    QPlainTextEdit *editor;
+    QString currentFile;
+
+    QAction *actionCut;
+    QAction *actionCopy;
+    QAction *actionPaste;
+
+    void createInterface();
+    void createActions();
+    void updateWindowTitle();
+    void setCurrentFile(const QString &fileName);
+
+    bool maybeSave();
+    bool loadFile(const QString &fileName);
+    bool saveFile(const QString &fileName);
 };
-#endif // MAINWINDOW_H
+
+#endif
